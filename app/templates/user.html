@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Tactificaton Post</title>
+	
+	<link href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename = 'css/animate.min.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename = 'css/style.min.css') }}" rel="stylesheet">
+
+</head>
+	
+<body>
+<div class="page-header">
+    <img class="img-rounded profile-thumbnail" src="{{ user.profile_pic_url(size=40) }}" width="100" height="100">
+    <table class="table-user" style="width:100%">
+	<tr class="tr-user">
+	    <th class="th-user">Field</th>
+	    <th class="th-user">Values</th>
+	</tr>
+	<tr class="tr-user">
+		<th class="th-user">id</th>
+		<th class="th-user">{{ user.id }}</th>
+	</tr>	
+	<tr class="tr-user">
+		<th class="th-user">email</th>
+		<th class="th-user">{{ user.email }}</th>
+	</tr>	
+	<tr class="tr-user">
+		<th class="th-user">username</th>
+		<th class="th-user">{{ user.username }}</th>
+	</tr>	
+	<tr class="tr-user">
+		<th class="th-user">role_id</th>
+		<th class="th-user">{{ user.role_id }}</th>
+	</tr>	
+	<tr class="tr-user">
+		<th class="th-user">is_active</th>
+		<th class="th-user">{{ user.is_active }}</th>
+	</tr>
+	<tr class="tr-user">
+		<th class="th-user">is_via_oauth</th>
+		<th class="th-user">{{ user.via_oauth }}</th>
+	</tr>
+	<tr class="tr-user">
+		<th class="th-user">name</th>
+		<th class="th-user">{{ user.name }}</th>
+	</tr>	
+	<tr class="tr-user">
+		<th class="th-user">country</th>
+		<th class="th-user">{{ user.country }}</th>
+	</tr>	
+	<tr class="tr-user">
+		<th class="th-user">location</th>
+		<th class="th-user">{{ user.location }}</th>
+	</tr>	
+	<tr class="tr-user">
+		<th class="th-user">member since</th>
+		<th class="th-user">{{ user.member_since }}</th>
+	</tr>	
+	<tr class="tr-user">
+		<th class="th-user">last seen</th>
+		<th class="th-user">{{ user.last_seen }}</th>
+	</tr>	
+	<tr class="tr-user">
+		<th class="th-user">confirmed</th>
+		<th class="th-user">{{ user.confirmed }}</th>
+	</tr>
+	<tr class="tr-user">
+		<th class="th-user">profile_pic</th>
+		<th class="th-user">{{ user.profile_pic }}</th>
+	</tr>
+	<tr class="tr-user">
+		<th class="th-user">profile_url</th>
+		<th class="th-user">{{ user.profile_url }}</th>
+	</tr>
+	<tr class="tr-user">
+		<th class="th-user">About Me</th>
+		<th class="th-user">{{ user.about_me }}</th>
+	</tr>
+    <tr class="tr-user">
+        <th class="th-user">Role permission</th>
+        <th class="th-user">{{ user.role.permissions }}</th>
+	</tr>
+	</table>
+</div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>

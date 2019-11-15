@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111663409-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-111663409-1');
+</script>
+      
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Tactification</title>
+
+    <!-- Bootstrap -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" rel="text/javascript">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/font-awesome.min.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename = 'css/animate.min.css') }}">
+    <link href="{{ url_for('static', filename = 'css/animate.min.css') }}" rel="stylesheet"> 
+    <!--Asset changes-->
+    {% assets "tactification_css" %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}">
+    {% endassets %}
+	<!--link href="{{ url_for('static', filename = 'css/style.min.css') }}" rel="stylesheet" /-->	
+    <!-- =======================================================
+        Theme Name: Day
+        Theme URL: https://bootstrapmade.com/day-multipurpose-html-template-for-free/
+        Author: BootstrapMade
+        Author URL: https://bootstrapmade.com
+    ======================================================= -->
+    </head>
+
+<script>
+    var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    {% if now_running %}
+        var background_img_url = "{{ now_running.render_tactics_pic() }}";
+    {% endif %}
+</script>
+
+  <body>
+    {% import "bootstrap/wtf.html" as wtf %}
+    {% import "_macros.html" as macros %}
+    {% include "signin.html" %}
+    <br>
+
+
+    <div class="container">
+        <div class="jumbotron jumbotron-color">
+            <blockquote class="blockquote">
+                <p class=" blockqt-color">Ten players needed constantly to be aware of what the man with the ball was doing and ANTINCIPATE what he would do next.</p>
+                <footer class="blockqt-color">Johan Cryuff</footer>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <button id="inspire-btn" type="button" class="btn-primary" onclick="inspireVideo('xX4mEhA0D_I')" >
+                                <span class="glyphicon glyphicon-play-circle"></span>
+                                Inspired from
+                            </button>                                        
+                        </div>
+                    </form>                
+            </blockquote>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal" id="myModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title"><span class="label label-primary">VIDEO</span></h4>
+          </div>      
+          <div class="modal-body">          
+            <iframe id="iframeYoutube" width="560" height="315"></iframe>             
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+	{% include "index_signin.html" %}
+	
+	<hr>
+
+
+    {% if now_running %}
+    <div class="container-fluid">
+        <div class="jumbotron">
+            <a href="{{ url_for('.post', id=now_running.id) }}">
+            
+                <div class="row">
+                    <div class="col-md-6">
+                        <img id="mainPost" class="img-responsive" src="{{ now_running.render_tactics_pic() }}">
+                    </div>                    
+                    <div class="col-md-6">
+                        <h3>{{ now_running.header }}</h3>
+                        <br>
+                        <p class="running-post">{{ now_running.body | safe }}</p> 
+                    </div>
+                </div>
+            
+            </a>
+        </div>
+    </div>
+
+    {% endif %}
+
+    <br>
+    <br>
+
+	<div class="gallery">
+		<div class="text-center">
+			<h2>Previous Posts</h2>
+        </div>
+        {% set new_container = 0 %}
+        {% for post in posts %}
+        {% if new_container is divisibleby 3 %}
+		    <div class="container">		
+                <div class="row">
+        {% endif %}    
+			        <div class="col-md-4">
+                        <a id="post-{{post.id}}" href="{{ url_for('.post', id=post.id) }}">
+                        <figure class="effect-marley">
+                            <img class="img-responsive" src="{{ post.render_tactics_pic() }}" alt=""/>
+
+                                <h4>{{ post.header }}</h4>
+			
+                        </figure>
+                        </a>
+                    </div>
+        {% set new_container = new_container + 1 %}               
+        {% if new_container is divisibleby 3 %}                    
+		    	</div>
+            </div>
+        {% endif %} 
+        {% endfor %}
+	</div>
+		
+    {% if pagination %}
+        <div class="text-center">
+            <div class="pagination">
+                {{ macros.pagination_widget(pagination, '.index') }}
+            </div>
+        </div>
+    {% endif %}
+    </div>
+    </div>
+
+{% include "footer_file.html" %}
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--Asset-->
+    <!--script type="text/javascript" src="../static/js/index.min.js"></script-->
+    <!--script type="text/javascript" src="../static/js/video.min.js"></script-->
+    {% assets "tactification_js_home" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+
+
+</body>
+</html>

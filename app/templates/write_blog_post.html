@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+{% include "header_script.html" %}
+
+  <body>
+    {% import "bootstrap/wtf.html" as wtf %}
+    {% import "_macros.html" as macros %}
+    {% include "signin.html" %}
+
+    <div class="container marketing">
+
+        {{ wtf.quick_form(form) }}
+
+    </div><!-- /.container -->
+
+    {% include "footer_file.html" %}
+    
+    <br>
+    
+    {% include "footer_script.html" %}
+    
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<div class="container">
+    {% for comment in comments %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="media">
+                <div class="media-left media-top">
+                    {% if comment.by_anonymous %}
+                        <img class="media-object" src="{{ comment.get_anonymous_pic(comment.anonymous_user_name, True) }}" style="width:60px">
+                    {% else %}
+                        <img class="media-object" src="{{ comment.get_anonymous_pic(comment.username, False) }}" style="width:60px">
+                    {% endif %}
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        {% if comment.by_anonymous %}
+                            <strong> {{ comment.anonymous_user_name }} </strong>
+                        {% else %}   
+                            <strong style="fontSize:18px">{{ comment.author.username }}</strong>
+                        {% endif %}
+                        
+                        <h4 style="font-size: 14px">
+                            {{ moment(comment.timestamp).fromNow(refresh = True) }}
+                        </h4>
+                    </h4>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p>
+                                {% if comment.body_html %}
+                                    <h4 class="blog-comment"> {{ comment.body_html | safe }} </h3>
+                                {% else %}
+                                    <h4 class="blog-comment">  {{ comment.body | safe }} </h3>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+    <div class="row" id="div0"></div>
+</div>
