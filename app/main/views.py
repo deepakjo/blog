@@ -208,7 +208,7 @@ def sitemap():
     for key, value in static_url_list.items():
         print 'rule', key, value 
         url = {
-            "loc": "{}, {}".format(host_base, url_for(value))
+            "loc": "{}/{}".format(host_base, url_for(value))
         }
         static_urls.append(url)
 
