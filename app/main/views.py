@@ -1,7 +1,9 @@
 import os
 from datetime import datetime, timedelta
 from flask import render_template, session, redirect, \
-                  url_for, current_app, request, flash, abort, jsonify
+                  url_for, current_app, request, flash, abort, jsonify, make_response
+import datetime
+from urlparse import urlparse
 from flask_login import login_required, current_user
 from decorators import admin_required, permission_required
 from forms import BlogCreateForm, BlogFileUploadForm
@@ -187,6 +189,49 @@ def writeBlog():
         return redirect(request.args.get('next') or url_for('main.blog_index'))
 
     return render_template('write_blog_post.html', form=form)
+
+@main.route("/sitemap")
+@main.route("/sitemap/")
+@main.route("/sitemap.xml")
+def sitemap():
+    """
+        Route to dynamically generate a sitemap of your website/application.
+        lastmod and priority tags omitted on static pages.
+        lastmod included on dynamic content such as blog posts.
+    """
+    host_components = urlparse(request.host_url)
+    host_base = host_components.scheme + "://" + host_components.netloc
+
+    static_url_list = {'blog_index':'main.blog_index'}
+    # Static routes with static content
+    static_urls = list()
+    for key, value in static_url_list.items():
+        print 'rule', key, value 
+        url = {
+            "loc": "{}, {}".format(host_base, url_for(value))
+        }
+        static_urls.append(url)
+
+    # Dynamic routes with dynamic content
+    dynamic_urls = list()
+    blog_posts = Post.query.all()
+    for post in blog_posts:
+        if post.is_blog is True:
+            url_ext = url_for('.blogpost', id=post.id, header=post.header)
+        else:
+            url_ext = url_for('main.post', id=post.id)
+
+        url = {
+            "loc": "{}/{}".format(host_base, url_ext),
+            "lastmod": post.timestamp.strftime("%Y-%m-%dT%H:%M:%SZ")
+            }
+        dynamic_urls.append(url)
+
+    xml_sitemap = render_template("sitemap.xml", static_urls=static_urls, dynamic_urls=dynamic_urls, host_base=host_base)
+    response = make_response(xml_sitemap)
+    response.headers["Content-Type"] = "application/xml"
+
+    return response
 
 @main.route('/uploadFile', methods=['GET', 'POST'])
 @login_required
